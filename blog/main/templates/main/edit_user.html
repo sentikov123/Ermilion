@@ -1,0 +1,23 @@
+{% extends 'main/base.html' %}
+
+{% block title %}{{ user.username }}{% endblock title %}
+
+{% block section %}
+<h1 class="fw-light">Смена личных данных</h1>
+
+<div class="container mt-4 mb-4 p-3 d-flex justify-content-center">
+    <div class="form-group">
+        <form method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+        </form>
+    </div>
+</div>
+
+{% endblock section %}
+{% block content %}
+
+
+{% endblock content %}
+
+

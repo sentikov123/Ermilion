@@ -1,0 +1,108 @@
+{% extends 'main/base.html' %}
+
+{% block title %}{{ title }}{% endblock title %}
+
+{% block section %}
+<h1 class="fw-light">Доступные посты</h1>
+
+
+<div class="dropdown text-end">
+    <a href="#" class="d-flex align-items-center col-lg-4 mb-2 mb-lg-0 link-dark text-decoration-none dropdown-toggle"
+       id="dropdownUser1"
+       data-bs-toggle="dropdown" aria-expanded="false">
+        <h1 class="fw-light">Выберете категорию</h1>
+    </a>
+    <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1" style="">
+        {% for cat in categories %}
+        {% if cat.name == selected_cat %}
+        <li><span class="dropdown-item active"> {{ cat.name }} </span></li>
+        {% else %}
+        <li><a href="{% url 'main:show_category' cat.slug %}" class="dropdown-item"> {{ cat.name }} </a>
+        </li>
+        {% endif %}
+
+        {% empty %}
+        <p class="text-muted">Пока нет ни одной категории</p>
+        {% endfor %}
+    </ul>
+</div>
+
+
+{% endblock section %}
+
+
+{% block content %}
+
+
+<div class="album py-5 bg-light">
+    <div class="container">
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-1 g-2">
+            {% for post in posts %}
+            <a href="{% url 'main:show_post' post.slug %}" style="text-decoration: none; color: #666">
+                <div class="card mb-3 card h-100">
+                    <div class="row g-0">
+                        <div class="col-md-4 scaler">
+                            <img src="{{ post.image }}" class="img-fluid rounded-start" alt="...">
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ post.title }}</h5>
+                                <p class="card-text">{{ post.text|truncatechars:200 }}</p>
+                                </p>
+                                <small class="text-muted">Дата публикации: {{ post.publish_date }}</small>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="card-footer d-flex justify-content-between">
+                        <small class="text-muted">"{{ post.category.name }}"                  </small>
+
+                        <small><a href="{% url 'main:show_post' post.slug %}" class="link-warning"
+                                  style="text-shadow: black 0 0 1px">Читать
+                            -></a></small>
+                    </div>
+                </div>
+
+            </a>
+
+
+
+            {% empty %}
+            <h1>Мы работаем над заполнением ленты новостей</h1>
+            {% endfor %}
+        </div>
+        {% if page_obj.has_other_pages %}
+        <nav class="mt-5" aria-label="Page navigation example">
+            <ul class="pagination justify-content-center">
+                {% if page_obj.has_previous %}
+                <li class="page-item">
+                    <a class="btn btn-outline-secondary" href="?page={{ page_obj.previous_page_number }}">Назад</a>
+                </li>
+                {% else %}
+                <li class="page-item disabled">
+                    <a class="page-link">Назад</a>
+                </li>
+                {% endif %}
+                {% for page in paginator.page_range %}
+                {% if page_obj.number == page %}
+                <li class="page-item active "><a class="btn btn-warning" style="text-shadow: black 0px 0px 10px"
+                                                 href="?page={{ page }}">{{ page }}</a></li>
+                {% elif page >= page_obj.number|add:-2 and page <= page_obj.number|add:2 %}
+                <li class="page-item"><a class="btn btn-outline-secondary" href="?page={{ page }}">{{ page }}</a></li>
+                {% endif %}
+                {% endfor %}
+                {% if page_obj.has_next %}
+                <li class="page-item">
+                    <a class="btn btn-outline-secondary" href="?page={{ page_obj.next_page_number }}">Далее</a>
+                </li>
+                {% else %}
+                <li class="page-item disabled">
+                    <a class="page-link">Далее</a>
+                </li>
+                {% endif %}
+            </ul>
+        </nav>
+        {% endif %}
+    </div>
+</div>
+{% endblock content %}

@@ -1,0 +1,12 @@
+{% extends 'main/base.html' %}
+
+{% block title %}{{ title }}{% endblock title %}
+
+{% block section %}
+
+<div class="album py-5 bg-light d-flex flex-column justify-content-center align-items-center">
+    <h1 class="fw-light">{{ post.title }}</h1>
+    <img src="{{ post.image }}">
+    <p>{{ post.text }}</p>
+</div>
+{% endblock section %}
