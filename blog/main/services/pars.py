@@ -74,8 +74,8 @@ def get_data(file_path):
 
 
 def main():
-    print(get_articles_urls(url='https://hi-tech.news/'))
-    # get_data(file_path='articles_urls.txt')
+    # print(get_articles_urls(url='https://hi-tech.news/'))
+    get_data(file_path='articles_urls.txt')
 
 
 if __name__ == '__main__':

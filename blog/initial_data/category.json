@@ -1,0 +1,58 @@
+[
+  {
+    "model": "main.Category",
+    "pk": 1,
+    "fields": {
+      "name": "Интернет",
+      "slug": "internet"
+    }
+  },
+  {
+    "model": "main.Category",
+    "pk": 2,
+    "fields": {
+      "name": "Медицина",
+      "slug": "medicine"
+    }
+  },
+  {
+    "model": "main.Category",
+    "pk": 3,
+    "fields": {
+      "name": "Наука",
+      "slug": "since"
+    }
+  },
+  {
+    "model": "main.Category",
+    "pk": 4,
+    "fields": {
+      "name": "Технологии",
+      "slug": "tech"
+    }
+  },
+  {
+    "model": "main.Category",
+    "pk": 5,
+    "fields": {
+      "name": "Прогресс",
+      "slug": "progress"
+    }
+  },
+  {
+    "model": "main.Category",
+    "pk": 6,
+    "fields": {
+      "name": "Автомобили",
+      "slug": "auto"
+    }
+  },
+  {
+    "model": "main.Category",
+    "pk": 7,
+    "fields": {
+      "name": "Гаджеты",
+      "slug": "gadgets"
+    }
+  }
+]

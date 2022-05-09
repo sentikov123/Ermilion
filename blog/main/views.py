@@ -104,16 +104,14 @@ class PasswordsChangeView(PasswordChangeView):
     success_url = reverse_lazy('password_success')
 
 
-# class PasswordAccepted(DetailView):
-#     template_name = 'main/password_accepted.html'
 
 def password_success(request):
     return render(request, 'main/password_success.html', {})
 
 
-# PtHfNeK365963548
-
 class MyAccount(LoginView):
     form_class = LoginUserForm
     template_name = 'main/my_account.html'
     # slug_url_kwarg = 'post_slug'
+
+

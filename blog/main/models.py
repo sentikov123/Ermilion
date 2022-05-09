@@ -7,14 +7,26 @@ from django.utils.text import slugify
 from django.contrib.auth.models import AbstractUser, PermissionsMixin
 
 
+class Category(models.Model):
+    name = models.CharField('Имя', max_length=20, unique=True, db_index=True)
+    slug = models.SlugField('URL', max_length=20, unique=True, db_index=True)
+
+    class Meta:
+        verbose_name = 'Категория'
+        verbose_name_plural = 'Категории'
+        unique_together = [['name', 'slug']]
+
+    def __str__(self):
+        return self.name
+
+
 class Post(models.Model):
-    title = models.CharField('Название', max_length=50)
-    slug = models.SlugField('URL статьи', max_length=50, unique=True, db_index=True)
+    title = models.CharField('Название', max_length=500)
+    slug = models.SlugField('URL статьи', max_length=500, unique=True, db_index=True)
     text = models.TextField('Текст')
-    # category = models.TextField('Категория')
-    category = models.ForeignKey('Category', on_delete=models.PROTECT, verbose_name='Категория')
+    category = models.ForeignKey(Category, on_delete=models.PROTECT, verbose_name='Категория')
     image = models.ImageField('Картинка', upload_to='main')
-    publish_date = models.DateTimeField('Время публикации', auto_now=True)
+    publish_date = models.CharField('Время публикации', max_length=500)
 
     class Meta:
         verbose_name = 'Пост'
@@ -36,36 +48,6 @@ class Post(models.Model):
 
     def __str__(self):
         return self.title
-
-
-class Category(models.Model):
-    name = models.CharField('Имя', max_length=20, unique=True, db_index=True)
-    slug = models.SlugField('URL', max_length=20, unique=True, db_index=True)
-
-    class Meta:
-        verbose_name = 'Категория'
-        verbose_name_plural = 'Категории'
-
-    def __str__(self):
-        return self.name
-
-
-# with open('C:/Users/Pavel/Desktop/iStepPython/Ermilion2/blog/main/services/result.json', encoding='utf-8') as file:
-#     x = file.read()
-
-#
-# with open('C:/Users/Pavel/Desktop/iStepPython/Ermilion2/blog/main/services/result.json', encoding='utf-8') as file:
-#     x = file.read()
-#
-# data = json.loads(x)
-#
-# #
-# for i in data[::-1]:
-#     postdb = Post(title=i["article_title"], publish_date=i["article_date"],
-#                   image=i["article_img"], text=i["article_text"],
-#                   category=Category.objects.get(name=i['article_category']))
-#
-#     postdb.save()  # сохранение постов после парсинга
 
 
 class MyUserManager(BaseUserManager):

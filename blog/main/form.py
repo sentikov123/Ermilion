@@ -47,17 +47,17 @@ class LoginUserForm(AuthenticationForm):
     username = CharField(
         label='Почта',
         widget=EmailInput(attrs={
-                'class': 'form-control',
-                'placeholder': 'Почта',
-                'id': 'floatingInput'
+            'class': 'form-control',
+            'placeholder': 'Почта',
+            'id': 'floatingInput'
         })
     )
     password = CharField(
         label='Пароль',
         widget=PasswordInput(attrs={
-                'class': 'form-control',
-                'placeholder': 'Пароль',
-                'id': 'floatingPassword'
+            'class': 'form-control',
+            'placeholder': 'Пароль',
+            'id': 'floatingPassword'
         })
     )
 
@@ -74,18 +74,18 @@ class RegisterUserForm(UserCreationForm):
     email = CharField(
         label='Почта',
         widget=EmailInput(attrs={
-                'class': 'form-control',
-                'placeholder': 'Почта',
-                'id': 'floatingInput',
-                'name': 'email'
+            'class': 'form-control',
+            'placeholder': 'Почта',
+            'id': 'floatingInput',
+            'name': 'email'
         })
     )
     password1 = CharField(
         label='Пароль',
         widget=PasswordInput(attrs={
-                'class': 'form-control',
-                'placeholder': 'Пароль',
-                'id': 'floatingPassword'
+            'class': 'form-control',
+            'placeholder': 'Пароль',
+            'id': 'floatingPassword'
         })
     )
     password2 = CharField(
@@ -110,9 +110,9 @@ class PasswordChangingForm(PasswordChangeForm):
     old_password = CharField(
         label='Старый пароль',
         widget=PasswordInput(attrs={
-                'class': 'form-control',
-                'placeholder': 'Пароль',
-                'type': 'password'
+            'class': 'form-control',
+            'placeholder': 'Пароль',
+            'type': 'password'
         })
     )
 
