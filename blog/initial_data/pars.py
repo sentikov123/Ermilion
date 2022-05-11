@@ -49,12 +49,26 @@ def get_data(file_path):
     result_data = []
     r = 0
 
-    for url in enumerate(urls_list[:800]):
+    for url in enumerate(urls_list[:100]):
         response = s.get(url=url[1], headers=headers)
         soup = BeautifulSoup(response.text, 'lxml')
 
         article_title = soup.find('div', class_='tn-content').find('h1', class_='tn-content-title').text.strip()
-        article_date = soup.find('div', class_='tn-side-bar').find('time', class_='tn-visible@t').text.strip()
+        date = soup.find('div', class_='tn-side-bar').find('time', class_='tn-visible@t').text.strip()
+        date1 = date.split()
+        m = {'января': '01',
+             'февраля': '02',
+             'марта': '03',
+             'апреля': '04',
+             'мая': '05',
+             'июня': '06',
+             'июля': '07',
+             'августа': '08',
+             'сентября': '09',
+             'октября': '10',
+             'ноября': '11',
+             'декабря': '12'}
+        article_date = f'{date1[2][:4]}-{m.get(date1[1])}-{date1[0]} {date1[3]}Z'
         try:
             article_img = f"https://tengrinews.kz{soup.find('div', class_='tn-news-content').find('picture').find('img').get('src')}"
         except AttributeError:
@@ -104,6 +118,7 @@ def get_data(file_path):
 def main():
     # get_articles_urls(url='http://tengrinews.kz/tech')
     get_data(file_path='D:/Django/blog/initial_data/article_urls.txt')
+
 
 
 if __name__ == '__main__':

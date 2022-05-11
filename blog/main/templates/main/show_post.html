@@ -8,10 +8,10 @@
     <h1 class="fw-light">{{ post.title }}</h1>
 
 
-    {% if user.avatar %}
-    <img src="{{ post.image.url }}" alt="" >
+    {% if post.image is valid %}
+    <img src="{{ post.image }}" alt="" >
     {% else %}
-    <img src="{{ post.image }}" alt="">
+    <img src="{{ post.image.url }}" alt="">
     {% endif %}
 
 

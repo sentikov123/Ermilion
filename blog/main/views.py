@@ -32,6 +32,7 @@ class PostIndex(ListView):
         context = super().get_context_data()
         context['title'] = 'Главная'
         context['categories'] = Category.objects.all()
+
         return context
 
 
