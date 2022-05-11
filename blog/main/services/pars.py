@@ -48,7 +48,7 @@ def get_data(file_path):
     s = requests.Session()
     result_data = []
 
-    for url in enumerate(urls_list[:100]):
+    for url in enumerate(urls_list[:100:-1]):
         response = s.get(url=url[1], headers=headers)
         soup = BeautifulSoup(response.text, 'lxml')
 
@@ -74,7 +74,7 @@ def get_data(file_path):
 
 
 def main():
-    # print(get_articles_urls(url='https://hi-tech.news/'))
+    print(get_articles_urls(url='https://hi-tech.news/'))
     get_data(file_path='articles_urls.txt')
 
 

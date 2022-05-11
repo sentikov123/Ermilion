@@ -51,6 +51,8 @@ class Post(models.Model):
 
 
 class MyUserManager(BaseUserManager):
+    use_in_migrations = True
+
     def _create_user(self, email, password, **extra_fields):
         if not email:
             raise ValueError('Почтовый адрес должен быть задан!')
@@ -75,8 +77,11 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
     date_joined = models.DateTimeField(auto_now_add=True)
+    bio = models.CharField('bio', max_length=100, blank=True)
+    avatar = models.FileField(upload_to='avatars/', null=True, blank=True)
 
     USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = []
 
     objects = MyUserManager()
 
@@ -85,3 +90,8 @@ class User(AbstractBaseUser, PermissionsMixin):
         user = cls.objects.get(pk=id)
         username = user.email.split('@')[0]
         return username
+
+    class Meta:
+        verbose_name = 'user'
+        verbose_name_plural = 'users'
+

@@ -1,6 +1,7 @@
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm, UserChangeForm, PasswordChangeForm
-from django.forms import ModelForm, TextInput, Textarea, FileInput, Select, PasswordInput, CharField, EmailInput
+from django.forms import ModelForm, TextInput, Textarea, FileInput, Select, PasswordInput, CharField, EmailInput, \
+    FileField, ImageField
 
 from .models import Post
 
@@ -65,6 +66,7 @@ class LoginUserForm(AuthenticationForm):
         super().__init__(*args, **kwargs)
         self.label_suffix = ''
 
+
     class Meta:
         model = get_user_model()
         fields = ['username', 'password']
@@ -96,14 +98,34 @@ class RegisterUserForm(UserCreationForm):
             'id': 'floatingPassword'
         })
     )
+    bio = CharField(
+        label='ФИО',
+        widget=TextInput(attrs={
+            'class': 'form-control',
+            'placeholder': 'ФИО',
+            'id': 'floatingInput',
+            'name': 'bio'
+        })
+    )
+    avatar = ImageField(
+        label='Avatar',
+        widget=FileInput(attrs={
+            'class': 'form-control',
+            'placeholder': 'Avatar',
+            'id': 'floatingInput',
+            'name': 'avatar'
+        })
+    )
+
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.label_suffix = ''
+        self.fields['avatar'].required = False
 
     class Meta:
         model = get_user_model()
-        fields = ['email', 'password1', 'password2']
+        fields = ['email', 'password1', 'password2', 'bio', 'avatar']
 
 
 class PasswordChangingForm(PasswordChangeForm):
