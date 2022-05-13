@@ -6,15 +6,7 @@
 
 <div class="album py-5 bg-light d-flex flex-column justify-content-center align-items-center">
     <h1 class="fw-light">{{ post.title }}</h1>
-
-
-    {% if post.image is valid %}
-    <img src="{{ post.image }}" alt="" >
-    {% else %}
     <img src="{{ post.image.url }}" alt="">
-    {% endif %}
-
-
     <p>{{ post.text }}</p>
 </div>
 {% endblock section %}

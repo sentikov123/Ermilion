@@ -4,6 +4,8 @@ import time
 from random import randrange
 import json
 
+from blog.blog.settings import BASE_DIR
+
 headers = {
     'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.84 Safari/537.36 OPR/85.0.4341.60'
@@ -18,7 +20,7 @@ def get_articles_urls(url):
     pagination_count = int(soup.find('ul', class_='tn-pagination').find_all('li')[-2].text)
 
     article_urls_list = []
-    for page in range(1, 50):
+    for page in range(2, 20):
         response = s.get(url=f'https://tengrinews.kz/tech/page/{page}/', headers=headers)
         soup = BeautifulSoup(response.text, 'lxml')
 
@@ -49,7 +51,7 @@ def get_data(file_path):
     result_data = []
     r = 0
 
-    for url in enumerate(urls_list[:100]):
+    for url in enumerate(urls_list):
         response = s.get(url=url[1], headers=headers)
         soup = BeautifulSoup(response.text, 'lxml')
 
@@ -70,9 +72,16 @@ def get_data(file_path):
              'декабря': '12'}
         article_date = f'{date1[2][:4]}-{m.get(date1[1])}-{date1[0]} {date1[3]}Z'
         try:
-            article_img = f"https://tengrinews.kz{soup.find('div', class_='tn-news-content').find('picture').find('img').get('src')}"
+            exile_img = f"https://tengrinews.k" \
+                    f"z{soup.find('div', class_='tn-news-content').find('picture').find('img').get('src')}"
         except AttributeError:
-            article_img = "https://klike.net/uploads/posts/2018-07/1531820435_2.jpg"
+            exile_img = "https://klike.net/uploads/posts/2018-07/1531820435_2.jpg"
+        image_bytes = requests.get(exile_img).content
+        s1 = exile_img.split('/')
+
+        with open(BASE_DIR / f'media/main/{s1[-1]}', 'wb') as file:
+            file.write(image_bytes)
+        article_img = 'main/' + s1[-1]
         article_text = soup.find('div', class_='tn-news-content').find('article',
                                                                        class_='tn-news-text').text.strip().replace('\n',
                                                                                                                    '')
@@ -116,7 +125,7 @@ def get_data(file_path):
 
 
 def main():
-    # get_articles_urls(url='http://tengrinews.kz/tech')
+    get_articles_urls(url='http://tengrinews.kz/tech')
     get_data(file_path='D:/Django/blog/initial_data/article_urls.txt')
 
 
