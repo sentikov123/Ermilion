@@ -1,10 +1,9 @@
 from django.contrib.auth.base_user import BaseUserManager, AbstractBaseUser
 from unidecode import unidecode
-import json
 from django.shortcuts import reverse
 from django.db import models
 from django.utils.text import slugify
-from django.contrib.auth.models import AbstractUser, PermissionsMixin
+from django.contrib.auth.models import PermissionsMixin
 
 
 class Category(models.Model):

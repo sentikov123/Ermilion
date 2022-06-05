@@ -1,14 +1,19 @@
+# регистрация модели проекта в админ панели
 from django.contrib import admin
 
 from .models import Post, Category, User
 
 
 class PostAdmin(admin.ModelAdmin):
+    # выбор полей для отображения
     list_display = ('id', 'title', 'slug', 'image', 'publish_date')
+    # выбор ссылок на пост
     list_display_links = ('id', 'title')
-    # list_editable = ('slug',)
+    # по каким полям осуществлять поиск
     search_fields = ('title', 'text')
+    # сортировка по дате
     list_filter = ('publish_date',)
+    # уникальная строка идентифифкатор
     prepopulated_fields = {'slug': ('title',)}
 
 

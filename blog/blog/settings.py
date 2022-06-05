@@ -93,7 +93,10 @@ DATABASES = {
         'USER': 'admin',
         'PASSWORD': 'postgres',
         'HOST': 'postgresdb',
-        'PORT': 5432
+        'PORT': 5432,
+        'TEST': {
+            'NAME': 'Post'
+        }
     }
 }
 
@@ -172,11 +175,16 @@ LOGGING = {
             'class': 'logging.FileHandler',
             'filename': BASE_DIR / 'logs/log.log',
             'formatter': 'main_form'
+        },
+        'console': {
+            'level': 'WARNING',
+            'class': 'logging.StreamHandler',
+            'formatter': 'main_form'
         }
     },
     'loggers': {
         'main': {
-            'handlers': ['file'],
+            'handlers': ['file', 'console'],
             'level': 'INFO'
         }
     }

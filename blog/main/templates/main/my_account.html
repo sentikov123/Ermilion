@@ -4,7 +4,7 @@
 
 {% block section %}
 <h1 class="fw-light">Личный кабинет</h1>
-
+{% if request.user.is_authenticated %}
 <div class="container mt-4 mb-4 p-3 d-flex justify-content-center">
     <div class="card p-4">
         <div class=" image d-flex flex-column justify-content-center align-items-center">
@@ -24,7 +24,14 @@
         </div>
     </div>
 </div>
+{% else %}
+<div class="container mt-4 mb-4 p-3 d-flex justify-content-center">
+    <div class="card p-4">
+        <h1>У вас нет доступа к личному кабинету.</h1>
+        <h3>Пройдите процедуру регистрации или авторизации</h3>
+    </div>
 </div>
+{% endif %}
 
 {% endblock section %}
 {% block content %}

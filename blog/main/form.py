@@ -1,7 +1,7 @@
 from django.contrib.auth import get_user_model
-from django.contrib.auth.forms import AuthenticationForm, UserCreationForm, UserChangeForm, PasswordChangeForm
+from django.contrib.auth.forms import AuthenticationForm, UserCreationForm, PasswordChangeForm
 from django.forms import ModelForm, TextInput, Textarea, FileInput, Select, PasswordInput, CharField, EmailInput, \
-    FileField, ImageField
+    ImageField
 
 from .models import Post
 
@@ -16,8 +16,10 @@ class PostForm(ModelForm):
 
     class Meta:
         model = Post
+        # поля для заполнения
         fields = ['title', 'category', 'text', 'image']
 
+        # описания полей для заполнения
         widgets = {
             'title': TextInput(attrs={
                 'class': 'form-control',
@@ -65,7 +67,6 @@ class LoginUserForm(AuthenticationForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.label_suffix = ''
-
 
     class Meta:
         model = get_user_model()
@@ -116,7 +117,6 @@ class RegisterUserForm(UserCreationForm):
             'name': 'avatar'
         })
     )
-
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

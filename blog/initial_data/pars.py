@@ -11,7 +11,7 @@ headers = {
     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.84 Safari/537.36 OPR/85.0.4341.60'
 }
 
-
+# получение ссылок на посты
 def get_articles_urls(url):
     s = requests.Session()
     response = s.get(url=url, headers=headers)
@@ -20,7 +20,8 @@ def get_articles_urls(url):
     pagination_count = int(soup.find('ul', class_='tn-pagination').find_all('li')[-2].text)
 
     article_urls_list = []
-    for page in range(2, 20):
+    # указывается количество страниц (пагинации) для получения ссылок на посты
+    for page in range(2, 30):
         response = s.get(url=f'https://tengrinews.kz/tech/page/{page}/', headers=headers)
         soup = BeautifulSoup(response.text, 'lxml')
 
@@ -30,16 +31,18 @@ def get_articles_urls(url):
             art_url = au.get('href')
             article_urls_list.append(f'https://tengrinews.kz{art_url}')
 
+        # остановка работы программы с рандомным временем, чтобы не получить бан
         time.sleep(randrange(1, 3))
         print(f'Обработал {page}/{pagination_count}')
 
+    # запись ссылок в файл
     with open('article_urls.txt', 'w') as file:
         for url in article_urls_list:
             file.write(f'{url}\n')
 
     return 'Работа по сбору ссылок выполнена!'
 
-
+# получение информации из постов по ссылкам, собранным ранее
 def get_data(file_path):
     global article_category
     with open(file_path, encoding='utf-8') as file:

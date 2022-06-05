@@ -1,9 +1,7 @@
-from django.contrib.auth import get_user_model
 import logging
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView, LogoutView, PasswordChangeView
-from django.contrib.auth.forms import PasswordChangeForm
-from django.shortcuts import reverse, get_object_or_404, render
+from django.shortcuts import reverse, render
 from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, DetailView
 
@@ -105,7 +103,6 @@ class PasswordsChangeView(PasswordChangeView):
     success_url = reverse_lazy('password_success')
 
 
-
 def password_success(request):
     return render(request, 'main/password_success.html', {})
 
@@ -113,6 +110,3 @@ def password_success(request):
 class MyAccount(LoginView):
     form_class = LoginUserForm
     template_name = 'main/my_account.html'
-    # slug_url_kwarg = 'post_slug'
-
-
